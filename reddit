@@ -1,0 +1,22 @@
+import requests
+from bs4 import BeautifulSoup
+
+def scrape_reddit():
+    url = 'https://www.reddit.com/'
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code == 200:
+        # Parse the HTML content of the page using BeautifulSoup
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # Find all the titles of articles on the page
+        titles = soup.find_all('h3', class_='s16sydo5-15')
+        
+        # Extract the text of each title and print it
+        for title in titles:
+            print(title.text)
+    else:
+        print('Failed to retrieve Reddit front page')
+
+scrape_reddit()
